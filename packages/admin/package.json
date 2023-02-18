@@ -1,6 +1,7 @@
 {
     "name": "@harmonia/admin",
-    "description": "0.0.0",
+    "version": "0.0.0",
+    "description": "Admin web interface for managing shortened URLs",
     "private": false,
     "scripts": {
         "dev": "dotnet watch --project ./src"

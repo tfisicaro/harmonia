@@ -9,7 +9,8 @@
     },
     "homepage": "#readme",
     "workspaces": [
-        "packages/*"
+        "packages/*",
+        "libraries/*"
     ],
     "packageManager": "yarn@3.4.1"
 }

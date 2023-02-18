@@ -1,0 +1,6 @@
+{
+    "name": "@harmonia/data",
+    "version": "0.0.0",
+    "description": "Data Access Layer for all Harmonia projects.",
+    "private": false
+}

@@ -1,6 +1,7 @@
 {
     "name": "@harmonia/api",
-    "description": "0.0.0",
+    "version": "0.0.0",
+    "description": "API that manages the database and request forwarding.",
     "private": false,
     "scripts": {
         "dev": "dotnet watch --project ./src"
