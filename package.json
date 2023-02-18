@@ -1,0 +1,15 @@
+{
+    "name": "@harmonia/harmonia",
+    "version": "0.0.0",
+    "description": "URL shortening with administrative dashboard",
+    "author": "Tim Fisicaro",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/tfisicaro/harmonia/issues"
+    },
+    "homepage": "#readme",
+    "workspaces": [
+        "packages/*"
+    ],
+    "packageManager": "yarn@3.4.1"
+}

@@ -1,2 +1,3 @@
-# harmonia
-URL shortening with administrative dashboard
+# Harmonia
+
+URL shortening with administrative dashboard.
