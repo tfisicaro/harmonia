@@ -5,7 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options => options.SwaggerDoc("v1", builder.Configuration.GetSection("OpenApiSettings").Get<OpenApiInfo>()));
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", builder.Configuration.GetSection("OpenApiSettings").Get<OpenApiInfo>());
+});
 
 var app = builder.Build();
 
