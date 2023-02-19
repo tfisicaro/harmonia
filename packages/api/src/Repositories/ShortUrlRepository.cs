@@ -12,6 +12,11 @@ public class ShortUrlRepository
         _cosmosShortUrlService = cosmosShortUrlService;
     }
 
+    public async Task<ShortUrl?> Create(ShortUrl shortUrl)
+    {
+        return await _cosmosShortUrlService.CreateAsync(shortUrl);
+    }
+
     public async Task<IEnumerable<ShortUrl>> GetAll()
     {
         return await _cosmosShortUrlService.GetAllShortUrlsAsync();
