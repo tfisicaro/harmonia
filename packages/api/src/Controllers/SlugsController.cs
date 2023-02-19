@@ -4,19 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace Harmonia.Api.Controllers;
 
 [ApiController]
-[Route("{slug}")]
-public class SlugController : ControllerBase
+[Route("")]
+public class SlugsController : ControllerBase
 {
-    private readonly ILogger<SlugController> _logger;
+    private readonly ILogger<SlugsController> _logger;
     private readonly ShortUrlRepository _shortUrlRepository;
     
-    public SlugController(ILogger<SlugController> logger, ShortUrlRepository shortUrlRepository)
+    public SlugsController(ILogger<SlugsController> logger, ShortUrlRepository shortUrlRepository)
     {
         _logger = logger;
         _shortUrlRepository = shortUrlRepository;
     }
 
-    [HttpGet(Name = "GetShortUrl")]
+    [HttpGet("{slug}", Name = "GetShortUrl")]
     public ActionResult Get(string slug)
     {
         _logger.LogDebug("Incoming request for slug \"{slug}\", trying to find destination in database.", slug);
@@ -28,5 +28,14 @@ public class SlugController : ControllerBase
             shortUrl.Slug, shortUrl.Destination);
         
         return Redirect(shortUrl.Destination);
+    }
+
+    [HttpGet("[controller]", Name = "GetAllShortUrls")]
+    public IActionResult All()
+    {
+        _logger.LogDebug("Retrieving all ShortUrls");
+        var shortUrls = _shortUrlRepository.GetAll().Result;
+        
+        return Ok(shortUrls);
     }
 }
