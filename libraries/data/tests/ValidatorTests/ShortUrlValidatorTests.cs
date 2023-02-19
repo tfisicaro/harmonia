@@ -37,4 +37,25 @@ public class ShortUrlValidatorTests
         // Assert
         results.IsValid.Should().Be(expectedResult);
     }
+    
+    [Theory]
+    [InlineData("bing", "httes://bing.com", false)]
+    [InlineData("bing", "file://bing.com", false)]
+    [InlineData("bing", "http://bing.com", true)]
+    [InlineData("bing", "https://bing.com", true)]
+    public void ShortUrlValidator_WithInvalidDestinationScheme_ShouldNotBeValid(string slug, string destination, bool expectedResult)
+    {
+        // Arrange
+        var shortUrl = new ShortUrl
+        {
+            Slug = slug,
+            Destination = destination,
+        };
+        
+        // Act
+        var results = _validator.Validate(shortUrl);
+
+        // Assert
+        results.IsValid.Should().Be(expectedResult);
+    }
 }
