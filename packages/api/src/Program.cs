@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", builder.Configuration.GetSection("OpenApiSettings").Get<OpenApiInfo>());
+});
+builder.Services.AddDbContext<CosmosContext>(options =>
+{
+    options.UseCosmos(builder.Configuration.GetConnectionString("Default"), "harmonia");
 });
 
 var app = builder.Build();
