@@ -4,6 +4,7 @@
     "description": "API that manages the database and request forwarding.",
     "private": false,
     "scripts": {
-        "dev": "dotnet watch --project ./src"
+        "dev": "dotnet watch --project ./src",
+        "start": "dotnet run --project ./src -c Release --environment Production -v m"
     }
 }
