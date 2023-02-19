@@ -10,12 +10,17 @@ namespace Harmonia.Api.Controllers;
 public class SlugsController : ControllerBase
 {
     private readonly ILogger<SlugsController> _logger;
+    private readonly IConfiguration _configuration;
     private readonly ShortUrlRepository _shortUrlRepository;
     private readonly ShortUrlValidator _shortUrlValidator = new();
     
-    public SlugsController(ILogger<SlugsController> logger, ShortUrlRepository shortUrlRepository)
+    public SlugsController(
+        ILogger<SlugsController> logger,
+        IConfiguration configuration,
+        ShortUrlRepository shortUrlRepository)
     {
         _logger = logger;
+        _configuration = configuration;
         _shortUrlRepository = shortUrlRepository;
     }
 
@@ -55,8 +60,14 @@ public class SlugsController : ControllerBase
         _logger.LogDebug("Incoming request for slug \"{slug}\", trying to find destination in database.", slug);
         var shortUrl = await _shortUrlRepository.Get(slug);
 
-        if (shortUrl?.Destination is null) return NotFound();
-        
+        if (shortUrl?.Destination is null)
+        {
+            // TODO: Move this logic into a helper method
+            // TODO: Count traffic stats for invalid slugs
+            var queryParams = $"?{_configuration.GetValue<string>("FallbackSettings:RefQueryParamName")}=cc&{_configuration.GetValue<string>("FallbackSettings:SourceQueryParamName")}={slug}";
+            return Redirect(_configuration.GetValue<string>("FallbackSettings:FallbackUrl") + queryParams);
+        }
+
         _logger.LogDebug("Incoming request for slug \"{slug}\" will be redirected to \"{destination}\"", 
             shortUrl.Slug, shortUrl.Destination);
         
