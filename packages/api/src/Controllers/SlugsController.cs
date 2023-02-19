@@ -16,20 +16,6 @@ public class SlugsController : ControllerBase
         _shortUrlRepository = shortUrlRepository;
     }
 
-    [HttpGet("{slug}", Name = "GetShortUrl")]
-    public ActionResult Get(string slug)
-    {
-        _logger.LogDebug("Incoming request for slug \"{slug}\", trying to find destination in database.", slug);
-        var shortUrl = _shortUrlRepository.Get(slug);
-
-        if (shortUrl.Destination == null) return NotFound();
-        
-        _logger.LogDebug("Incoming request for slug \"{slug}\" will be redirected to \"{destination}\"", 
-            shortUrl.Slug, shortUrl.Destination);
-        
-        return Redirect(shortUrl.Destination);
-    }
-
     [HttpGet("[controller]", Name = "GetAllShortUrls")]
     public IActionResult All()
     {
@@ -37,5 +23,19 @@ public class SlugsController : ControllerBase
         var shortUrls = _shortUrlRepository.GetAll().Result;
         
         return Ok(shortUrls);
+    }
+    
+    [HttpGet("{slug}", Name = "GetShortUrl")]
+    public async Task<ActionResult> Get(string slug)
+    {
+        _logger.LogDebug("Incoming request for slug \"{slug}\", trying to find destination in database.", slug);
+        var shortUrl = await _shortUrlRepository.Get(slug);
+
+        if (shortUrl is null) return NotFound();
+        
+        _logger.LogDebug("Incoming request for slug \"{slug}\" will be redirected to \"{destination}\"", 
+            shortUrl.Slug, shortUrl.Destination);
+        
+        return Redirect(shortUrl.Destination);
     }
 }

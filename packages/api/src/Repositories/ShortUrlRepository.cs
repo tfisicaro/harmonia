@@ -1,28 +1,24 @@
+using Harmonia.Api.Services;
 using Harmonia.Data;
 
 namespace Harmonia.Api.Repositories;
 
-public interface IShortUrlRepository
+public class ShortUrlRepository
 {
-    public ShortUrl Get(string path);
-}
+    private readonly CosmosShortUrlService _cosmosShortUrlService;
 
-public class ShortUrlRepository : IShortUrlRepository
-{
-    // TODO: Retrieve data from database
-    public ShortUrl Get(string path)
+    public ShortUrlRepository(CosmosShortUrlService cosmosShortUrlService)
     {
-        if (path == "test12")
-            return new ShortUrl
-            {
-                Slug = "test12",
-                Destination = "https://bing.com",
-            };
-        
-        return new ShortUrl
-        {
-            Slug = "anything",
-            Destination = "https://google.com",
-        };
+        _cosmosShortUrlService = cosmosShortUrlService;
+    }
+
+    public async Task<IEnumerable<ShortUrl>> GetAll()
+    {
+        return await _cosmosShortUrlService.GetAllShortUrlsAsync();
+    }
+    
+    public async Task<ShortUrl?> Get(string path)
+    {
+        return await _cosmosShortUrlService.GetBySlugAsync(path);
     }
 }

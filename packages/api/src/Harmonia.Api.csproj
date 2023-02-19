@@ -1,13 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    </PropertyGroup>
+      <UserSecretsId>ae67dc9f-d051-49ce-a44a-f1a0447709a9</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.32.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
